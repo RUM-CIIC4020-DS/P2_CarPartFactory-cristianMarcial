@@ -11,22 +11,22 @@ public class CarPart {
 	/**
 	 * Unique number that identifies the part.
 	 */
-	int id = 0;
+	int id;
 	
 	/**
 	 * Name of the part.
 	 */
-	String name = "";
+	String name;
 	
 	/**
 	 * Weight of the part.
 	 */
-	double weight = 0.0d;
+	double weight;
 	
 	/**
 	 * It is true if this part is defective; false otherwise.
 	 */
-	boolean isDetective = false;
+	boolean isDetective;
 	
     public CarPart(int id, String name, double weight, boolean isDetective) {
         this.id = id;
