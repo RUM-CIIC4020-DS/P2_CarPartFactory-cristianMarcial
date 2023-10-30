@@ -8,43 +8,43 @@ public class PartMachine {
         
     }
     public int getId() {
-       
+       return 0;
     }
     public void setId(int id) {
         
     }
     public Queue<Integer> getTimer() {
-       
+    	return null;
     }
     public void setTimer(Queue<Integer> timer) {
         
     }
     public CarPart getPart() {
-       
+    	return null;
     }
     public void setPart(CarPart part1) {
         
     }
     public Queue<CarPart> getConveyorBelt() {
-        
+    	return null;
     }
     public void setConveyorBelt(Queue<CarPart> conveyorBelt) {
     	
     }
     public int getTotalPartsProduced() {
-         
+    	return 0;
     }
     public void setTotalPartsProduced(int count) {
     	
     }
     public double getPartWeightError() {
-        
+    	return 0.0d;
     }
     public void setPartWeightError(double partWeightError) {
         
     }
     public int getChanceOfDefective() {
-        
+    	return 0;
     }
     public void setChanceOfDefective(int chanceOfDefective) {
         
@@ -53,10 +53,10 @@ public class PartMachine {
         
     }
     public int tickTimer() {
-       
+    	return 0;
     }
     public CarPart produceCarPart() {
-       
+    	return null;
     }
 
     /**
