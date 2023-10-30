@@ -4,12 +4,19 @@ import java.io.IOException;
 
 import interfaces.*;;
 
+/**
+ * This class will represent a car part produced by the? machine of this.
+ * 
+ * 
+ * @author Cristian Marcial cristian.marcial@upr.edu 
+ */
 public class CarPartFactory {
 	
 	/**
 	 * 
 	 */
 	List<PartMachine> machines;
+	
 	/**
 	 * 
 	 */
@@ -105,6 +112,7 @@ public class CarPartFactory {
     public void processOrders() {
         
     }
+    
     /**
      * Generates a report indicating how many parts were produced per machine,
      * how many of those were defective and are still in inventory. Additionally, 

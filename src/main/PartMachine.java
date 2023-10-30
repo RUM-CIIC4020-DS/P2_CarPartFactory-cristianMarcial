@@ -2,6 +2,12 @@ package main;
 
 import interfaces.Queue;
 
+/**
+ * This class will represent a car part produced by the? machine of this.
+ * 
+ * 
+ * @author Cristian Marcial cristian.marcial@upr.edu 
+ */
 public class PartMachine {
 	
 	/**
