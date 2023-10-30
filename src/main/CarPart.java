@@ -1,7 +1,7 @@
 package main;
 
 /**
- * This class
+ * This class will represent a car part produced by the? machine of this.
  * 
  * 
  * @author Cristian Marcial cristian.marcial@upr.edu 
