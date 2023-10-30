@@ -4,60 +4,106 @@ import interfaces.Queue;
 
 public class PartMachine {
 	
-	//test??
-	int id = 0;
+	/**
+	 * 
+	 */
+	int id;
+	/**
+	 * 
+	 */
+	CarPart part;
+	/**
+	 * 
+	 */
+	int period;
+	/**
+	 * 
+	 */
+	double weightError;
+	/**
+	 * 
+	 */
+	int chanceOfDefective;
+	/**
+	 * 
+	 */
+	Queue<Integer> timer;
+	/**
+	 * 
+	 */
+	Queue<CarPart> conveyorBelt;
 	
     public PartMachine(int id, CarPart p1, int period, double weightError, int chanceOfDefective) {
-        
+        this.id = id;
+        this.part = p1;
+        this.period = period;
+        this.weightError = weightError;
+        this.chanceOfDefective = chanceOfDefective;
     }
+    
     public int getId() {
-       return 0;
+       return this.id;
     }
+    
     public void setId(int id) {
-        
+        this.id = id;
     }
+    
     public Queue<Integer> getTimer() {
-    	return null;
+    	return this.timer;
     }
+    
     public void setTimer(Queue<Integer> timer) {
-        
+        this.timer = timer;
     }
+    
     public CarPart getPart() {
-    	return null;
+    	return this.part;
     }
+    
     public void setPart(CarPart part1) {
-        
+        this.part = part1;
     }
     public Queue<CarPart> getConveyorBelt() {
-    	return null;
+    	return this.conveyorBelt;
     }
+    
     public void setConveyorBelt(Queue<CarPart> conveyorBelt) {
-    	
+    	this.conveyorBelt = conveyorBelt;
     }
+    
     public int getTotalPartsProduced() {
     	return 0;
     }
+    
     public void setTotalPartsProduced(int count) {
     	
     }
+    
     public double getPartWeightError() {
     	return 0.0d;
     }
+    
     public void setPartWeightError(double partWeightError) {
         
     }
+    
     public int getChanceOfDefective() {
     	return 0;
     }
+    
     public void setChanceOfDefective(int chanceOfDefective) {
         
     }
+    
     public void resetConveyorBelt() {
         
     }
+    
     public int tickTimer() {
     	return 0;
     }
+    
     public CarPart produceCarPart() {
     	return null;
     }
