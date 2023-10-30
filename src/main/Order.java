@@ -8,25 +8,25 @@ public class Order {
         
     }
     public int getId() {
-        
+        return 0;
     }
     public void setId(int id) {
         
     }
     public boolean isFulfilled() {
-      
+      return true;
     }
     public void setFulfilled(boolean fulfilled) {
         
     }
     public Map<Integer, Integer> getRequestedParts() {
-       
+    	return null;
     }
     public void setRequestedParts(Map<Integer, Integer> requestedParts) {
        
     }
     public String getCustomerName() {
-      
+    	return null;
     }
     public void setCustomerName(String customerName) {
         

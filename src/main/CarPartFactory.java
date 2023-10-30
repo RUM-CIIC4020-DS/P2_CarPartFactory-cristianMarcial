@@ -1,5 +1,9 @@
 package main;
 
+import java.io.IOException;
+
+import interfaces.*;;
+
 public class CarPartFactory {
 
         
@@ -7,37 +11,37 @@ public class CarPartFactory {
                 
     }
     public List<PartMachine> getMachines() {
-       
+    	return null;
     }
     public void setMachines(List<PartMachine> machines) {
         
     }
     public Stack<CarPart> getProductionBin() {
-      
+      return null;
     }
     public void setProductionBin(Stack<CarPart> production) {
        
     }
     public Map<Integer, CarPart> getPartCatalog() {
-        
+    	return null;
     }
     public void setPartCatalog(Map<Integer, CarPart> partCatalog) {
         
     }
     public Map<Integer, List<CarPart>> getInventory() {
-       
+    	return null;
     }
     public void setInventory(Map<Integer, List<CarPart>> inventory) {
         
     }
     public List<Order> getOrders() {
-        
+    	return null;
     }
     public void setOrders(List<Order> orders) {
         
     }
     public Map<Integer, Integer> getDefectives() {
-        
+    	return null;
     }
     public void setDefectives(Map<Integer, Integer> defectives) {
         

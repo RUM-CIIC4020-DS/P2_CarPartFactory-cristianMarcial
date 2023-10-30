@@ -6,26 +6,26 @@ public class CarPart {
         
     }
     public int getId() {
-        
+        return 0;
     }
     public void setId(int id) {
         
     }
     public String getName() {
-        
+        return "";
     }
     public void setName(String name) {
         
     }
     public double getWeight() {
-      
+      return 0.0d;
     }
     public void setWeight(double weight) {
       
     }
 
     public boolean isDetective() {
-      
+      return true;
     }
     public void setDetective(boolean isDetective) {
         
