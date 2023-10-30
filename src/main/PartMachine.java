@@ -3,7 +3,10 @@ package main;
 import interfaces.Queue;
 
 public class PartMachine {
-   
+	
+	//test??
+	int id = 0;
+	
     public PartMachine(int id, CarPart p1, int period, double weightError, int chanceOfDefective) {
         
     }
