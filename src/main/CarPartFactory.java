@@ -1,5 +1,7 @@
 package main;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 
 import interfaces.*;;
@@ -43,7 +45,31 @@ public class CarPartFactory {
 	Stack<CarPart> productionBin;
 	
     public CarPartFactory(String orderPath, String partsPath) throws IOException {
-                
+    	
+    	/**
+    	 * Orders
+    	 */
+    	BufferedReader line = new BufferedReader(new FileReader(orderPath));
+		String currentLine;
+		line.readLine(); 
+		
+		while((currentLine = line.readLine()) != null) { 
+	        String[] lineSplit = currentLine.split(",", 3);  
+	        
+	        int numOfRequestedPartsMap = 0;
+	        for(char i : lineSplit[2].toCharArray()) if(i=='-') numOfRequestedPartsMap++;
+	        String[] requestedParts = lineSplit[2].split("-", numOfRequestedPartsMap); 
+	        
+	        //Map<Integer, Integer> requestedPartsMap0 = new MapHashTable<Integer, Integer>(0, new HashFunction());
+	        //Map<Integer, Integer> requestedPartsMap0 = new HashTableSC<Integer, Integer>(0, new HashFunction<Integer>(0));
+	        Map<Integer, Integer> requestedPartsMap = null;
+	        
+	        for(int i = 0; i < lineSplit[2].length(); i++) {
+	        	//if() {}
+	        }
+	        
+	        this.orders.add(new Order(Integer.parseInt(lineSplit[0]), lineSplit[1], requestedPartsMap, false));
+		}
     }
     
     public List<PartMachine> getMachines() {

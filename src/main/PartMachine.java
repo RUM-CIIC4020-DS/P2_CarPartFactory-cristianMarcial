@@ -214,17 +214,22 @@ public class PartMachine {
     	return previous;
     }
     
+    /**
+     * This method is the one that generates a new part and returns what is currently in the front of the conveyor belt.
+     * 
+     * @return the previous value that was in the front of the conveyor belt.
+     */
     public CarPart produceCarPart() {
-    	CarPart result = conveyorBelt.front();
+    	CarPart previous = conveyorBelt.front();
     	
     	if(timer.front() == 0) {
     		double newWeight = (part.getWeight() - weightError) + (2 * weightError * new Random().nextDouble());
     		CarPart newPart = new CarPart(part.getId(), part.getName(), newWeight, (totalPartsProduced % chanceOfDefective == 0));
-    		conveyorBelt.dequeue();
+    		//conveyorBelt.dequeue();
     		conveyorBelt.enqueue(newPart); 
     		totalPartsProduced++;
-    	}
-    	return result;
+    	} else conveyorBelt.enqueue(null);
+    	return previous;
     }
 
     /**
