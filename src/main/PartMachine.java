@@ -49,6 +49,11 @@ public class PartMachine {
 	Queue<CarPart> conveyorBelt = new ListQueue<CarPart>();
 	
 	/**
+	 * The total amount of parts produced by this machine.
+	 */
+	int totalPartsProduced;
+	
+	/**
 	 * Constructor
 	 */
     public PartMachine(int id, CarPart p1, int period, double weightError, int chanceOfDefective) {
@@ -141,7 +146,7 @@ public class PartMachine {
    	 * @return an integer representing the number of the parts produced.
    	 */
     public int getTotalPartsProduced() {
-    	return 0;
+    	return this.totalPartsProduced;
     }
     
     /**
@@ -150,7 +155,7 @@ public class PartMachine {
 	 * @param count an integer for replacing the previous value of the number of all parts produced by the machine.
 	 */
     public void setTotalPartsProduced(int count) {
-    	
+    	this.totalPartsProduced = count;
     }
     
     /**
@@ -159,7 +164,7 @@ public class PartMachine {
    	 * @return a double value representing the weight error of the part being produced.
    	 */
     public double getPartWeightError() {
-    	return 0.0d;
+    	return this.weightError;
     }
     
     /**
@@ -168,7 +173,7 @@ public class PartMachine {
 	 * @param partWeightError a double for replacing the previous weight error value.
 	 */
     public void setPartWeightError(double partWeightError) {
-        
+        this.weightError = partWeightError;
     }
     
     /**
@@ -201,6 +206,12 @@ public class PartMachine {
     }
     
     public CarPart produceCarPart() {
+    	if(this.timer.front()==0) {
+    		
+    		conveyorBelt.dequeue();
+    		this.conveyorBelt.enqueue(part); //part ??
+    		this.totalPartsProduced++;
+    	}
     	return null;
     }
 
