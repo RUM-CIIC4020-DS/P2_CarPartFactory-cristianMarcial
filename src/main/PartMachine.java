@@ -1,5 +1,7 @@
 package main;
 
+import java.util.Random;
+
 import data_structures.ListQueue;
 import interfaces.Queue;
 
@@ -194,11 +196,18 @@ public class PartMachine {
         this.chanceOfDefective = chanceOfDefective;
     }
     
+    /**
+     * This method empties the conveyor belt. It sets all 10 values to null.
+     */
     public void resetConveyorBelt() {
     	this.conveyorBelt.clear();
     	for(int i=0; i<9; i++) this.conveyorBelt.enqueue(null);
     }
     
+    /**
+     * This method updates the timer by one. This means we take the value at the front and place it at the back.
+     * It returns the value at the front before updating it.
+     */
     public int tickTimer() {
     	int previous = this.timer.dequeue();
     	this.timer.enqueue(previous);
@@ -206,13 +215,16 @@ public class PartMachine {
     }
     
     public CarPart produceCarPart() {
-    	if(this.timer.front()==0) {
-    		
+    	CarPart result = conveyorBelt.front();
+    	
+    	if(timer.front() == 0) {
+    		double newWeight = (part.getWeight() - weightError) + (2 * weightError * new Random().nextDouble());
+    		CarPart newPart = new CarPart(part.getId(), part.getName(), newWeight, (totalPartsProduced % chanceOfDefective == 0));
     		conveyorBelt.dequeue();
-    		this.conveyorBelt.enqueue(part); //part ??
-    		this.totalPartsProduced++;
+    		conveyorBelt.enqueue(newPart); 
+    		totalPartsProduced++;
     	}
-    	return null;
+    	return result;
     }
 
     /**
