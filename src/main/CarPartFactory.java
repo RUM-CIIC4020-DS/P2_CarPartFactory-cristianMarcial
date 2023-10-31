@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-import interfaces.*;;
+import data_structures.BasicHashFunction;
+import data_structures.HashTableSC;
+import interfaces.*;
 
 /**
  * This class will represent a car part produced by the? machine of this.
@@ -49,27 +51,28 @@ public class CarPartFactory {
     	/**
     	 * Orders
     	 */
-    	BufferedReader line = new BufferedReader(new FileReader(orderPath));
-		String currentLine;
-		line.readLine(); 
+    	BufferedReader lineInOrdersFile = new BufferedReader(new FileReader(orderPath));
+		String currentLineInOrdersFile; //InOrder
+		lineInOrdersFile.readLine(); 
 		
-		while((currentLine = line.readLine()) != null) { 
-	        String[] lineSplit = currentLine.split(",", 3);  
+		while((currentLineInOrdersFile = lineInOrdersFile.readLine()) != null) { 
+	        String[] lineSplit = currentLineInOrdersFile.split(",", 3);
 	        
-	        int numOfRequestedPartsMap = 0;
+	        int numOfRequestedPartsMap = 1;
 	        for(char i : lineSplit[2].toCharArray()) if(i=='-') numOfRequestedPartsMap++;
-	        String[] requestedParts = lineSplit[2].split("-", numOfRequestedPartsMap); 
+	        String[] requestedParts = lineSplit[2].split("-", numOfRequestedPartsMap);
+	        Map<Integer, Integer> requestedPartsMap = new HashTableSC<Integer, Integer>(0, new BasicHashFunction());
 	        
-	        //Map<Integer, Integer> requestedPartsMap0 = new MapHashTable<Integer, Integer>(0, new HashFunction());
-	        //Map<Integer, Integer> requestedPartsMap0 = new HashTableSC<Integer, Integer>(0, new HashFunction<Integer>(0));
-	        Map<Integer, Integer> requestedPartsMap = null;
-	        
-	        for(int i = 0; i < lineSplit[2].length(); i++) {
-	        	//if() {}
+	        for(String i : requestedParts) {
+	        	String s[] = i.substring(1, i.length()-1).split(" ", 2);
+	        	requestedPartsMap.put(Integer.parseInt(s[0]), Integer.parseInt(s[1]));
 	        }
-	        
 	        this.orders.add(new Order(Integer.parseInt(lineSplit[0]), lineSplit[1], requestedPartsMap, false));
 		}
+		
+		/**
+		 * Parts
+		 */
     }
     
     public List<PartMachine> getMachines() {
