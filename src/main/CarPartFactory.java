@@ -22,74 +22,84 @@ public class CarPartFactory {
 	 */
 	List<Order> orders;
 	
+	/**
+	 * 
+	 */
 	Map<Integer, CarPart> partCatalog;
 	
+	/**
+	 * 
+	 */
 	Map<Integer, List<CarPart>> inventory;
 	
-	Map<Integer, Integer> defective;
+	/**
+	 * 
+	 */
+	Map<Integer, Integer> defectives;
 	
+	/**
+	 * 
+	 */
 	Stack<CarPart> productionBin;
-	
-	
 	
     public CarPartFactory(String orderPath, String partsPath) throws IOException {
                 
     }
     
     public List<PartMachine> getMachines() {
-    	return null;
+    	return this.machines;
     }
     
     public void setMachines(List<PartMachine> machines) {
-        
+        this.machines = machines;
     }
     
     public Stack<CarPart> getProductionBin() {
-      return null;
+    	return this.productionBin;
     }
     
     public void setProductionBin(Stack<CarPart> production) {
-       
+       this.productionBin = production;
     }
     
     public Map<Integer, CarPart> getPartCatalog() {
-    	return null;
+    	return this.partCatalog;
     }
     
     public void setPartCatalog(Map<Integer, CarPart> partCatalog) {
-        
+        this.partCatalog = partCatalog;
     }
     
     public Map<Integer, List<CarPart>> getInventory() {
-    	return null;
+    	return this.inventory;
     }
     
     public void setInventory(Map<Integer, List<CarPart>> inventory) {
-        
+        this.inventory = inventory;
     }
     
     public List<Order> getOrders() {
-    	return null;
+    	return this.orders;
     }
     
     public void setOrders(List<Order> orders) {
-        
+        this.orders = orders;
     }
     
     public Map<Integer, Integer> getDefectives() {
-    	return null;
+    	return this.defectives;
     }
     
     public void setDefectives(Map<Integer, Integer> defectives) {
-        
+        this.defectives = defectives;
     }
 
     public void setupOrders(String path) throws IOException {
-       
+    	
     }
     
     public void setupMachines(String path) throws IOException {
-       
+    	
     }
     
     public void setupCatalog() {
@@ -101,14 +111,13 @@ public class CarPartFactory {
     }
     
     public void storeInInventory() {
-       
+    	
     }
     
     public void runFactory(int days, int minutes) {
         
     }
-
-   
+    
     public void processOrders() {
         
     }
