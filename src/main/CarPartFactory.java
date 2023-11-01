@@ -47,32 +47,8 @@ public class CarPartFactory {
 	Stack<CarPart> productionBin;
 	
     public CarPartFactory(String orderPath, String partsPath) throws IOException {
-    	
-    	/**
-    	 * Orders
-    	 */
-    	BufferedReader lineInOrdersFile = new BufferedReader(new FileReader(orderPath));
-		String currentLineInOrdersFile; //InOrder
-		lineInOrdersFile.readLine(); 
-		
-		while((currentLineInOrdersFile = lineInOrdersFile.readLine()) != null) { 
-	        String[] lineSplit = currentLineInOrdersFile.split(",", 3);
-	        
-	        int numOfRequestedPartsMap = 1;
-	        for(char i : lineSplit[2].toCharArray()) if(i=='-') numOfRequestedPartsMap++;
-	        String[] requestedParts = lineSplit[2].split("-", numOfRequestedPartsMap);
-	        Map<Integer, Integer> requestedPartsMap = new HashTableSC<Integer, Integer>(0, new BasicHashFunction());
-	        
-	        for(String i : requestedParts) {
-	        	String s[] = i.substring(1, i.length()-1).split(" ", 2);
-	        	requestedPartsMap.put(Integer.parseInt(s[0]), Integer.parseInt(s[1]));
-	        }
-	        this.orders.add(new Order(Integer.parseInt(lineSplit[0]), lineSplit[1], requestedPartsMap, false));
-		}
-		
-		/**
-		 * Parts
-		 */
+    	setupMachines(partsPath);
+    	setupOrders(orderPath);
     }
     
     public List<PartMachine> getMachines() {
@@ -124,15 +100,43 @@ public class CarPartFactory {
     }
 
     public void setupOrders(String path) throws IOException {
-    	
+    	BufferedReader lineInOrdersFile = new BufferedReader(new FileReader(path));
+		String currentLineInOrdersFile; 
+		lineInOrdersFile.readLine(); 
+		
+		while((currentLineInOrdersFile = lineInOrdersFile.readLine()) != null) {
+	        String[] lineSplit = currentLineInOrdersFile.split(",", 3);
+	        
+	        int numOfRequestedPartsMap = 1;
+	        for(char i : lineSplit[2].toCharArray()) if(i=='-') numOfRequestedPartsMap++;
+	        String[] requestedParts = lineSplit[2].split("-", numOfRequestedPartsMap);
+	        Map<Integer, Integer> requestedPartsMap = new HashTableSC<Integer, Integer>(0, new BasicHashFunction());
+	        
+	        for(String i : requestedParts) {
+	        	String s[] = i.substring(1, i.length()-1).split(" ", 2);
+	        	requestedPartsMap.put(Integer.parseInt(s[0]), Integer.parseInt(s[1]));
+	        }
+	        this.orders.add(new Order(Integer.parseInt(lineSplit[0]), lineSplit[1], requestedPartsMap, false));
+		}
+		lineInOrdersFile.close();
     }
     
     public void setupMachines(String path) throws IOException {
-    	
+    	BufferedReader lineInPartsFile = new BufferedReader(new FileReader(path));
+		String currentLineInPartsFile; 
+		lineInPartsFile.readLine();
+		
+		while((currentLineInPartsFile = lineInPartsFile.readLine()) != null) {
+			String[] lS = currentLineInPartsFile.split(",", 6); //ID 0 ,PartName 1,Weight 2,WeightError 3,Period 4,ChanceOfDefective 5
+			CarPart part = new CarPart(Integer.parseInt(lS[0]), lS[1], Double.parseDouble(lS[2]), false);
+			this.partCatalog.put(0, part);
+			this.machines.add(new PartMachine(Integer.parseInt(lS[0]), part, Integer.parseInt(lS[4]), Double.parseDouble(lS[3]), Integer.parseInt(lS[5])));
+		}
+		lineInPartsFile.close();
     }
     
     public void setupCatalog() {
-        
+    	
     }
     
     public void setupInventory() {
