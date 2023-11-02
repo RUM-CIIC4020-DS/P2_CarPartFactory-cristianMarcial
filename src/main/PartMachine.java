@@ -64,6 +64,7 @@ public class PartMachine {
         this.period = period;
         this.weightError = weightError;
         this.chanceOfDefective = chanceOfDefective;
+        this.totalPartsProduced = 0;
         
         for(int i=0; i<period; i++) this.timer.enqueue(i);
         //for(int i=0; i<9; i++) this.conveyorBelt.enqueue(null);
@@ -209,9 +210,13 @@ public class PartMachine {
      * It returns the value at the front before updating it.
      */
     public int tickTimer() {
+    	/*
     	int previous = this.timer.dequeue();
     	this.timer.enqueue(previous);
     	return previous;
+    	*/
+    	this.timer.enqueue(this.timer.front());
+    	return this.timer.dequeue();
     }
     
     /**

@@ -11,44 +11,51 @@ import interfaces.*;
 /**
  * This class will represent a car part produced by the? machine of this.
  * 
+ * This class will do most of the heavy lifting in this project. This is the class that will manage all the
+ * machines and any operation related to them. ??)
+ * 
  * 
  * @author Cristian Marcial cristian.marcial@upr.edu 
  */
 public class CarPartFactory {
 	
 	/**
-	 * 
+	 * A list with all the machines that produce parts.
 	 */
 	List<PartMachine> machines;
 	
 	/**
-	 * 
+	 * A list with all the orders received.
 	 */
 	List<Order> orders;
 	
 	/**
-	 * 
+	 * Map that holds all the car parts that can be produced in the factory. The key is the id of the CarPart, 
+	 * this allows for quick look up for the parts.
 	 */
 	Map<Integer, CarPart> partCatalog;
 	
 	/**
-	 * 
+	 * Map that hold all the parts produced and not used for an order yet. The key is the id for the CarPart and
+	 * the value is a List with all the available parts.
 	 */
 	Map<Integer, List<CarPart>> inventory;
 	
 	/**
-	 * 
+	 * Map that counts how many defective parts have been produced. The key is the car part id and the value the
+	 * count of defective parts.
 	 */
 	Map<Integer, Integer> defectives;
 	
 	/**
-	 * 
+	 * A stack that receives all the parts produced by the machines during production.
 	 */
 	Stack<CarPart> productionBin;
 	
     public CarPartFactory(String orderPath, String partsPath) throws IOException {
     	setupMachines(partsPath);
     	setupOrders(orderPath);
+    	setupCatalog();
     }
     
     public List<PartMachine> getMachines() {
@@ -117,8 +124,7 @@ public class CarPartFactory {
 	        	requestedPartsMap.put(Integer.parseInt(s[0]), Integer.parseInt(s[1]));
 	        }
 	        this.orders.add(new Order(Integer.parseInt(lineSplit[0]), lineSplit[1], requestedPartsMap, false));
-		}
-		lineInOrdersFile.close();
+		} lineInOrdersFile.close();
     }
     
     public void setupMachines(String path) throws IOException {
@@ -131,16 +137,15 @@ public class CarPartFactory {
 			CarPart part = new CarPart(Integer.parseInt(lS[0]), lS[1], Double.parseDouble(lS[2]), false);
 			this.partCatalog.put(0, part);
 			this.machines.add(new PartMachine(Integer.parseInt(lS[0]), part, Integer.parseInt(lS[4]), Double.parseDouble(lS[3]), Integer.parseInt(lS[5])));
-		}
-		lineInPartsFile.close();
+		} lineInPartsFile.close();
     }
     
     public void setupCatalog() {
-    	
+    	//Already in setupMachines
     }
     
     public void setupInventory() {
-        
+    	this.inventory = new HashTableSC<Integer, List<CarPart>>(0, new BasicHashFunction());
     }
     
     public void storeInInventory() {
