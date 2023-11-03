@@ -198,11 +198,11 @@ public class PartMachine {
     }
     
     /**
-     * This method empties the conveyor belt. It sets all 10 values to null.
+     * This method empties the conveyor belt and sets null all of its 10 spaces.
      */
     public void resetConveyorBelt() {
     	this.conveyorBelt.clear();
-    	for(int i=0; i<9; i++) this.conveyorBelt.enqueue(null);
+    	for(int i=0; i<10; i++) this.conveyorBelt.enqueue(null);
     }
     
     /**
@@ -210,27 +210,37 @@ public class PartMachine {
      * It returns the value at the front before updating it.
      */
     public int tickTimer() {
-    	/*
-    	int previous = this.timer.dequeue();
-    	this.timer.enqueue(previous);
-    	return previous;
-    	*/
+    	//int previous = this.timer.dequeue(); this.timer.enqueue(previous); return previous;
     	this.timer.enqueue(this.timer.front());
     	return this.timer.dequeue();
     }
     
     /**
-     * This method is the one that generates a new part and returns what is currently in the front of the conveyor belt.
+     * This method generates a new part when the front of the timer is 0 and returns what is currently in the front 
+     * of the conveyor belt.
      * 
      * @return the previous value that was in the front of the conveyor belt.
      */
     public CarPart produceCarPart() {
-    	CarPart previous = conveyorBelt.front();
+    	
+    	/**
+    	 * Previous value which was in front of the conveyor belt.
+    	 */
+    	CarPart previous = conveyorBelt.dequeue();
     	
     	if(timer.front() == 0) {
+    		
+    		/**
+    		 * New weight of the variable "newPart". This new weight is randomly generated using the Random Class. The random
+    		 * value generated is between the weight of the part plus or minus the weightError. For example: If the weight of 
+    		 * the part is 2 and the weightError is 0.4, the weight of the part is between 1.6 (2.0-0.4) or 2.6 (2.0+0.4) which 
+    		 * is the same as (2.0-0.4+2*0.4); the last weightError is duplicated in order to be multiplied by a random double 
+    		 * between 0.0 an 1.0 so that the output is between the minus value is untouched (1.6) and the maximum value 
+    		 * (1.6+0.4*2==2.6).
+    		 */
     		double newWeight = (part.getWeight() - weightError) + (2 * weightError * new Random().nextDouble());
     		CarPart newPart = new CarPart(part.getId(), part.getName(), newWeight, (totalPartsProduced % chanceOfDefective == 0));
-    		//conveyorBelt.dequeue();
+    		
     		conveyorBelt.enqueue(newPart); 
     		totalPartsProduced++;
     	} else conveyorBelt.enqueue(null);

@@ -55,7 +55,7 @@ public class CarPartFactory {
     public CarPartFactory(String orderPath, String partsPath) throws IOException {
     	setupMachines(partsPath);
     	setupOrders(orderPath);
-    	setupCatalog();
+    	setupInventory();
     }
     
     public List<PartMachine> getMachines() {
@@ -71,7 +71,7 @@ public class CarPartFactory {
     }
     
     public void setProductionBin(Stack<CarPart> production) {
-       this.productionBin = production;
+    	this.productionBin = production;
     }
     
     public Map<Integer, CarPart> getPartCatalog() {
@@ -146,6 +146,8 @@ public class CarPartFactory {
     
     public void setupInventory() {
     	this.inventory = new HashTableSC<Integer, List<CarPart>>(0, new BasicHashFunction());
+    	//put == add if same id
+    	for(int i : partCatalog.getKeys()) this.inventory.put(i, null);
     }
     
     public void storeInInventory() {
