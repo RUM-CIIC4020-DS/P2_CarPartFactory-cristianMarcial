@@ -9,10 +9,7 @@ import data_structures.HashTableSC;
 import interfaces.*;
 
 /**
- * This class will represent a car part produced by the? machine of this.
- * 
- * This class will do most of the heavy lifting in this project. This is the class that will manage all the
- * machines and any operation related to them. ??)
+ * This class will manage all the machines and any operation related to them. ??)
  * 
  * 
  * @author Cristian Marcial cristian.marcial@upr.edu 
@@ -105,7 +102,13 @@ public class CarPartFactory {
     public void setDefectives(Map<Integer, Integer> defectives) {
         this.defectives = defectives;
     }
-
+    
+    /**
+     * Receives the path to the order’s csv then initializes and populates the order’s map with the information
+     * from the file. Initially all orders are unfulfilled.
+     * 
+     * @param path a String for 
+     */
     public void setupOrders(String path) throws IOException {
     	BufferedReader lineInOrdersFile = new BufferedReader(new FileReader(path));
 		String currentLineInOrdersFile; 
