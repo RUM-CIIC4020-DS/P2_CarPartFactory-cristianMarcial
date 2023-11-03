@@ -42,7 +42,7 @@ public class PartMachine {
 	 * A queue that has numbers from this period value minus 1 to 0. This will essentially act as a count down 
 	 * for when the next part will be produced.
 	 */
-	Queue<Integer> timer = new ListQueue<Integer>();
+	Queue<Integer> timer;
 	
 	/**
 	 * This queue will simulate the conveyor belt at the end of the machine. Has 10 spaces available, 
@@ -65,7 +65,7 @@ public class PartMachine {
         this.weightError = weightError;
         this.chanceOfDefective = chanceOfDefective;
         this.totalPartsProduced = 0;
-        
+        this.timer = new ListQueue<Integer>();
         for(int i=0; i<period; i++) this.timer.enqueue(i);
         //for(int i=0; i<9; i++) this.conveyorBelt.enqueue(null);
         resetConveyorBelt();
@@ -223,6 +223,11 @@ public class PartMachine {
      */
     public CarPart produceCarPart() {
     	
+    	/** WARNING
+    	 * This updates the timer.
+    	 */
+    	tickTimer();
+    	
     	/**
     	 * Previous value which was in front of the conveyor belt.
     	 */
@@ -244,6 +249,8 @@ public class PartMachine {
     		conveyorBelt.enqueue(newPart); 
     		totalPartsProduced++;
     	} else conveyorBelt.enqueue(null);
+    	
+    	
     	return previous;
     }
 
