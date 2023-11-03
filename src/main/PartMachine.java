@@ -42,7 +42,7 @@ public class PartMachine {
 	 * A queue that has numbers from this period value minus 1 to 0. This will essentially act as a count down 
 	 * for when the next part will be produced.
 	 */
-	Queue<Integer> timer;
+	Queue<Integer> timer = new ListQueue<Integer>();
 	
 	/**
 	 * This queue will simulate the conveyor belt at the end of the machine. Has 10 spaces available, 
@@ -65,9 +65,10 @@ public class PartMachine {
         this.weightError = weightError;
         this.chanceOfDefective = chanceOfDefective;
         this.totalPartsProduced = 0;
-        this.timer = new ListQueue<Integer>();
-        for(int i=0; i<period; i++) this.timer.enqueue(i);
-        //for(int i=0; i<9; i++) this.conveyorBelt.enqueue(null);
+        
+        //for(int i=0; i<period; i++) this.timer.enqueue(i);
+        for(int i=period-1; i>=0; i--) this.timer.enqueue(i);
+         
         resetConveyorBelt();
     }
     
@@ -210,7 +211,6 @@ public class PartMachine {
      * It returns the value at the front before updating it.
      */
     public int tickTimer() {
-    	//int previous = this.timer.dequeue(); this.timer.enqueue(previous); return previous;
     	this.timer.enqueue(this.timer.front());
     	return this.timer.dequeue();
     }
@@ -222,11 +222,6 @@ public class PartMachine {
      * @return the previous value that was in the front of the conveyor belt.
      */
     public CarPart produceCarPart() {
-    	
-    	/** WARNING
-    	 * This updates the timer.
-    	 */
-    	tickTimer();
     	
     	/**
     	 * Previous value which was in front of the conveyor belt.
@@ -250,7 +245,10 @@ public class PartMachine {
     		totalPartsProduced++;
     	} else conveyorBelt.enqueue(null);
     	
-    	
+    	/** 
+    	 * This updates the timer.
+    	 */
+    	tickTimer();
     	return previous;
     }
 
