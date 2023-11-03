@@ -34,6 +34,8 @@ public class Order {
     public Order(int id, String customerName, Map<Integer, Integer> requestedParts, boolean fulfilled) {
         this.id = id;
         this.customerName = customerName;
+        this.requestedParts = requestedParts;
+        this.fulfilled = fulfilled;
     }
     
     /**
