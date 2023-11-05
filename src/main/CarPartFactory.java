@@ -158,7 +158,9 @@ public class CarPartFactory {
     }
     
     public void runFactory(int days, int minutes) {
-        
+        for(int i = 0; i < days; i++) {
+        	for(int j = 0; j < minutes; j++) {}
+        }
     }
     
     public void processOrders() {

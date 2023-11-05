@@ -94,7 +94,7 @@ public class CarPart {
 	 * 
 	 * @return a boolean value representing s whether this part is defective or not.
 	 */
-    public boolean isDetective() {
+    public boolean getDetective() {
     	return this.isDetective;
     }
     

@@ -53,7 +53,7 @@ public class PartMachine {
 	/**
 	 * The total amount of parts produced by this machine.
 	 */
-	int totalPartsProduced;
+	int totalPartsProduced = 0;
 	
 	/**
 	 * Constructor
@@ -64,9 +64,7 @@ public class PartMachine {
         this.period = period;
         this.weightError = weightError;
         this.chanceOfDefective = chanceOfDefective;
-        this.totalPartsProduced = 0;
         
-        //for(int i=0; i<period; i++) this.timer.enqueue(i);
         for(int i=period-1; i>=0; i--) this.timer.enqueue(i);
          
         resetConveyorBelt();
