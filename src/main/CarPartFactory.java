@@ -112,13 +112,14 @@ public class CarPartFactory {
      * @param path a String for receiving the file path in which the orders are located.
      */
     public void setupOrders(String path) throws IOException {
+		this.orders = new DoublyLinkedList<Order>();
+		
     	BufferedReader lineInOrdersFile = new BufferedReader(new FileReader(path));
 		String currentLineInOrdersFile; 
 		lineInOrdersFile.readLine(); 
 		
-		this.orders = new DoublyLinkedList<Order>();
-		
 		while((currentLineInOrdersFile = lineInOrdersFile.readLine()) != null) {
+			
 			/**
 			 * Each line is spilt id,customer_name,requested_parts 
 			 */
@@ -139,18 +140,17 @@ public class CarPartFactory {
     }
     
     public void setupMachines(String path) throws IOException {
-    	BufferedReader lineInPartsFile = new BufferedReader(new FileReader(path));
-		String currentLineInPartsFile; 
-		lineInPartsFile.readLine();
-		
-		
 		this.machines = new DoublyLinkedList<PartMachine>();
 		this.partCatalog = new HashTableSC<Integer, CarPart>(8, new BasicHashFunction());
+		
+    	BufferedReader lineInPartsFile = new BufferedReader(new FileReader(path));
+		String currentLineInPartsFile;
+		lineInPartsFile.readLine();
 		
 		while((currentLineInPartsFile = lineInPartsFile.readLine()) != null) {
 			String[] lS = currentLineInPartsFile.split(",", 6); //ID 0 ,PartName 1,Weight 2,WeightError 3,Period 4,ChanceOfDefective 5
 			CarPart part = new CarPart(Integer.parseInt(lS[0]), lS[1], Double.parseDouble(lS[2]), false);
-			this.partCatalog.put(0, part);
+			this.partCatalog.put(Integer.parseInt(lS[0]), part);
 			this.machines.add(new PartMachine(Integer.parseInt(lS[0]), part, Integer.parseInt(lS[4]), Double.parseDouble(lS[3]), Integer.parseInt(lS[5])));
 		} lineInPartsFile.close();
     }
@@ -161,7 +161,7 @@ public class CarPartFactory {
     
     public void setupInventory() {
     	this.inventory = new HashTableSC<Integer, List<CarPart>>(8, new BasicHashFunction());
-    	for(int i : partCatalog.getKeys()) this.inventory.put(i, new DoublyLinkedList<CarPart>()); //Cant be null
+    	for(int i : partCatalog.getKeys()) this.inventory.put(i, new DoublyLinkedList<CarPart>());
     }
     
     public void storeInInventory() {
@@ -170,7 +170,9 @@ public class CarPartFactory {
     
     public void runFactory(int days, int minutes) {
         for(int i = 0; i < days; i++) {
-        	for(int j = 0; j < minutes; j++) {}
+        	for(int j = 0; j < minutes; j++) {
+        		
+        	}
         }
     }
     
