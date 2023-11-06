@@ -107,7 +107,7 @@ public class CarPartFactory {
      * Receives the path to the order’s csv then initializes and populates the order’s map with the information
      * from the file. Initially all orders are unfulfilled.
      * 
-     * @param path a String for 
+     * @param path a String for receiving the file path in which the orders are located.
      */
     public void setupOrders(String path) throws IOException {
     	BufferedReader lineInOrdersFile = new BufferedReader(new FileReader(path));
@@ -115,6 +115,9 @@ public class CarPartFactory {
 		lineInOrdersFile.readLine(); 
 		
 		while((currentLineInOrdersFile = lineInOrdersFile.readLine()) != null) {
+			/**
+			 * Each line is spilt id,customer_name,requested_parts 
+			 */
 	        String[] lineSplit = currentLineInOrdersFile.split(",", 3);
 	        
 	        int numOfRequestedPartsMap = 1;
@@ -122,6 +125,7 @@ public class CarPartFactory {
 	        String[] requestedParts = lineSplit[2].split("-", numOfRequestedPartsMap);
 	        Map<Integer, Integer> requestedPartsMap = new HashTableSC<Integer, Integer>(0, new BasicHashFunction());
 	        
+	        //(5 8)-(3 6)-(1 10)
 	        for(String i : requestedParts) {
 	        	String s[] = i.substring(1, i.length()-1).split(" ", 2);
 	        	requestedPartsMap.put(Integer.parseInt(s[0]), Integer.parseInt(s[1]));
