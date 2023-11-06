@@ -141,7 +141,7 @@ public class CarPartFactory {
     
     public void setupMachines(String path) throws IOException {
 		this.machines = new DoublyLinkedList<PartMachine>();
-		this.partCatalog = new HashTableSC<Integer, CarPart>(8, new BasicHashFunction());
+		this.partCatalog = new HashTableSC<Integer, CarPart>(10, new BasicHashFunction());
 		
     	BufferedReader lineInPartsFile = new BufferedReader(new FileReader(path));
 		String currentLineInPartsFile;
@@ -160,7 +160,7 @@ public class CarPartFactory {
     }
     
     public void setupInventory() {
-    	this.inventory = new HashTableSC<Integer, List<CarPart>>(8, new BasicHashFunction());
+    	this.inventory = new HashTableSC<Integer, List<CarPart>>(10, new BasicHashFunction());
     	for(int i : partCatalog.getKeys()) this.inventory.put(i, new DoublyLinkedList<CarPart>());
     }
     
