@@ -128,7 +128,7 @@ public class CarPartFactory {
 	        int numOfRequestedPartsMap = 1;
 	        for(char i : lineSplit[2].toCharArray()) if(i=='-') numOfRequestedPartsMap++;
 	        String[] requestedParts = lineSplit[2].split("-", numOfRequestedPartsMap);
-	        Map<Integer, Integer> requestedPartsMap = new HashTableSC<Integer, Integer>(8, new BasicHashFunction());
+	        Map<Integer, Integer> requestedPartsMap = new HashTableSC<Integer, Integer>(10, new BasicHashFunction());
 	        
 	        //(5 8)-(3 6)-(1 10)
 	        for(String i : requestedParts) {
