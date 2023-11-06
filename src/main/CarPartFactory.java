@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import data_structures.BasicHashFunction;
+import data_structures.DoublyLinkedList;
 import data_structures.HashTableSC;
 import interfaces.*;
 
@@ -31,6 +32,7 @@ public class CarPartFactory {
 	 * this allows for quick look up for the parts.
 	 */
 	Map<Integer, CarPart> partCatalog;
+	
 	
 	/**
 	 * Map that hold all the parts produced and not used for an order yet. The key is the id for the CarPart and
@@ -114,6 +116,8 @@ public class CarPartFactory {
 		String currentLineInOrdersFile; 
 		lineInOrdersFile.readLine(); 
 		
+		this.orders = new DoublyLinkedList<Order>();
+		
 		while((currentLineInOrdersFile = lineInOrdersFile.readLine()) != null) {
 			/**
 			 * Each line is spilt id,customer_name,requested_parts 
@@ -123,7 +127,7 @@ public class CarPartFactory {
 	        int numOfRequestedPartsMap = 1;
 	        for(char i : lineSplit[2].toCharArray()) if(i=='-') numOfRequestedPartsMap++;
 	        String[] requestedParts = lineSplit[2].split("-", numOfRequestedPartsMap);
-	        Map<Integer, Integer> requestedPartsMap = new HashTableSC<Integer, Integer>(0, new BasicHashFunction());
+	        Map<Integer, Integer> requestedPartsMap = new HashTableSC<Integer, Integer>(8, new BasicHashFunction());
 	        
 	        //(5 8)-(3 6)-(1 10)
 	        for(String i : requestedParts) {
@@ -139,6 +143,10 @@ public class CarPartFactory {
 		String currentLineInPartsFile; 
 		lineInPartsFile.readLine();
 		
+		
+		this.machines = new DoublyLinkedList<PartMachine>();
+		this.partCatalog = new HashTableSC<Integer, CarPart>(8, new BasicHashFunction());
+		
 		while((currentLineInPartsFile = lineInPartsFile.readLine()) != null) {
 			String[] lS = currentLineInPartsFile.split(",", 6); //ID 0 ,PartName 1,Weight 2,WeightError 3,Period 4,ChanceOfDefective 5
 			CarPart part = new CarPart(Integer.parseInt(lS[0]), lS[1], Double.parseDouble(lS[2]), false);
@@ -152,9 +160,8 @@ public class CarPartFactory {
     }
     
     public void setupInventory() {
-    	this.inventory = new HashTableSC<Integer, List<CarPart>>(0, new BasicHashFunction());
-    	//put == add if same id
-    	for(int i : partCatalog.getKeys()) this.inventory.put(i, null);
+    	this.inventory = new HashTableSC<Integer, List<CarPart>>(8, new BasicHashFunction());
+    	for(int i : partCatalog.getKeys()) this.inventory.put(i, new DoublyLinkedList<CarPart>()); //Cant be null
     }
     
     public void storeInInventory() {
