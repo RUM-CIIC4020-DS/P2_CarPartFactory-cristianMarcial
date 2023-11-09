@@ -116,7 +116,7 @@ public class CarPartFactory {
 		
     	BufferedReader lineInOrdersFile = new BufferedReader(new FileReader(path));
 		String currentLineInOrdersFile; 
-		lineInOrdersFile.readLine(); 
+		lineInOrdersFile.readLine();
 		
 		while((currentLineInOrdersFile = lineInOrdersFile.readLine()) != null) {
 			
@@ -170,9 +170,26 @@ public class CarPartFactory {
     
     public void runFactory(int days, int minutes) {
         for(int i = 0; i < days; i++) {
+        	
         	for(int j = 0; j < minutes; j++) {
+        		/*
+        		for(int k = 0; k < this.machines.size(); k++) {
+        			CarPart result = this.machines.get(k).produceCarPart();
+        			if(result!=null) this.productionBin.push(result);
+        		}*/
+        		for(PartMachine m: this.machines) {
+        			CarPart result = m.produceCarPart();
+        			if(result!=null) this.productionBin.push(result);
+        		}
+        		
+        		
         		
         	}
+        	
+        	//this.machines.get(i).getConveyorBelt().
+        	//revise
+        	this.storeInInventory();
+        	this.processOrders();
         }
     }
     
