@@ -165,34 +165,49 @@ public class CarPartFactory {
     }
     
     public void storeInInventory() {
+    	//var size
+    	/*
+    	for(int i = 0; i < this.productionBin.size(); i++) {
     	
+    	}*/ //LEER BIEN
+    	while(!this.getProductionBin().isEmpty()) {
+    		if(!productionBin.top().isDetective()) 
+    			inventory.get(productionBin.top().getId()).add(productionBin.top().getId(), productionBin.top());
+    		else if(defectives.containsKey(productionBin.top().getId())) 
+    			defectives.put(productionBin.top().getId(), defectives.get(productionBin.top().getId()+1));
+    		else 
+    			defectives.put(productionBin.top().getId(), 1);
+    		getProductionBin().pop();
+    	}
     }
     
     public void runFactory(int days, int minutes) {
         for(int i = 0; i < days; i++) {
         	
-        	for(int j = 0; j < minutes; j++) {
-        		/*
-        		for(int k = 0; k < this.machines.size(); k++) {
-        			CarPart result = this.machines.get(k).produceCarPart();
-        			if(result!=null) this.productionBin.push(result);
-        		}*/
+        	for(int j = 0; j < minutes; j++)
         		for(PartMachine m: this.machines) {
         			CarPart result = m.produceCarPart();
         			if(result!=null) this.productionBin.push(result);
         		}
-        		
-        		
-        		
-        	}
         	
+        	for(PartMachine m: this.machines) {
+        		for(int k = 0; k < 10; k++) {
+        			if(m.getConveyorBelt().front()!=null) this.productionBin.push(m.getConveyorBelt().front());
+        			m.getConveyorBelt().dequeue();
+        			m.getConveyorBelt().enqueue(null);
+        		}
+        	}
         	//this.machines.get(i).getConveyorBelt().
         	//revise
         	this.storeInInventory();
-        	this.processOrders();
-        }
+        } //this.processOrders();
     }
     
+    /**
+     * Checks the current inventory and starts fulfilling orders if the parts are available. It’s considered fulfilled if 
+     * all the parts are available and they are removed from inventory. If an order cannot be fulfilled, then the parts 
+     * remain in inventory.
+     */
     public void processOrders() {
         
     }
