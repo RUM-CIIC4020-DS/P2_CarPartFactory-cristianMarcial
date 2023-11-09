@@ -143,6 +143,12 @@ public class CarPartFactory {
 		} lineInOrdersFile.close();
     }
     
+    /**
+     * Method that receives a path to the parts csv and initializes all the machines with the provided information. There
+     * is no specific rule for the id of the machines, except that they must be unique.
+     * 
+     * @param path
+     */
     public void setupMachines(String path) throws IOException {
 		this.machines = new DoublyLinkedList<PartMachine>();
 		this.partCatalog = new HashTableSC<Integer, CarPart>(10, new BasicHashFunction());
@@ -159,20 +165,22 @@ public class CarPartFactory {
 		} lineInPartsFile.close();
     }
     
-    public void setupCatalog() {
-    	//Already in setupMachines
-    }
-    
+    /**
+     * Initializes the inventory map. Initially all the car part id's will have an empty List.
+     */
     public void setupInventory() {
     	this.inventory = new HashTableSC<Integer, List<CarPart>>(10, new BasicHashFunction());
     	for(int i : partCatalog.getKeys()) this.inventory.put(i, new DoublyLinkedList<CarPart>());
     }
     
+    /**
+     * Checks the content of the production bin and places it in its corresponding List in the inventory. If a part
+     * is defective, it's not included in the inventory and the defective count for that part increases.
+     */
     public void storeInInventory() {
-    	//LEER BIEN
     	while(!this.productionBin.isEmpty()) {
     		if(!productionBin.top().isDetective()) 
-    			inventory.get(productionBin.top().getId()).add(productionBin.top().getId(), productionBin.top());
+    			inventory.get(productionBin.top().getId()).add(productionBin.top());
     		else if(defectives.containsKey(productionBin.top().getId())) 
     			defectives.put(productionBin.top().getId(), defectives.get(productionBin.top().getId()+1));
     		else 
@@ -181,26 +189,27 @@ public class CarPartFactory {
     	}
     }
     
+    /**
+     * Simulates the execution of the factory for the given number of days and each day runs for the given amount of minutes.
+     * 
+     * @param days
+     * @param minutes 
+     */
     public void runFactory(int days, int minutes) {
-        for(int i = 0; i < days; i++) {
-        	
+        for(int i = 0; i < days; i++) {	
         	for(int j = 0; j < minutes; j++)
         		for(PartMachine m: this.machines) {
         			CarPart result = m.produceCarPart();
         			if(result!=null) this.productionBin.push(result);
         		}
-        	
         	for(PartMachine m: this.machines) {
         		for(int k = 0; k < 10; k++) {
         			if(m.getConveyorBelt().front()!=null) this.productionBin.push(m.getConveyorBelt().front());
         			m.getConveyorBelt().dequeue();
         			m.getConveyorBelt().enqueue(null);
         		}
-        	}
-        	//this.machines.get(i).getConveyorBelt().
-        	//revise
-        	this.storeInInventory();
-        } //this.processOrders();
+        	} this.storeInInventory();
+        } this.processOrders();
     }
     
     /**
@@ -209,7 +218,16 @@ public class CarPartFactory {
      * remain in inventory.
      */
     public void processOrders() {
-        
+        for(Order o : this.orders) {
+            List<Integer> availableParts = new DoublyLinkedList<Integer>();
+        	boolean fulfilled = true;
+            //o.getRequestedParts().get(p) /availableParts.put(p, o.getRequestedParts().get(p));
+        	for(int p : o.getRequestedParts().getKeys())
+        		if(inventory.containsKey(p)) availableParts.add(p);
+        		else fulfilled = false;
+        	if(fulfilled) for(int i : availableParts) inventory.remove(i);
+        	o.setFulfilled(fulfilled);
+        }
     }
     
     /**
