@@ -7,6 +7,7 @@ import java.io.IOException;
 import data_structures.BasicHashFunction;
 import data_structures.DoublyLinkedList;
 import data_structures.HashTableSC;
+import data_structures.LinkedStack;
 import interfaces.*;
 
 /**
@@ -55,6 +56,9 @@ public class CarPartFactory {
     	setupMachines(partsPath);
     	setupOrders(orderPath);
     	setupInventory();
+    	this.productionBin = new LinkedStack<CarPart>(); 
+    	defectives = new HashTableSC<Integer, Integer>(10, new BasicHashFunction());
+        
     }
     
     public List<PartMachine> getMachines() {
@@ -165,19 +169,15 @@ public class CarPartFactory {
     }
     
     public void storeInInventory() {
-    	//var size
-    	/*
-    	for(int i = 0; i < this.productionBin.size(); i++) {
-    	
-    	}*/ //LEER BIEN
-    	while(!this.getProductionBin().isEmpty()) {
+    	//LEER BIEN
+    	while(!this.productionBin.isEmpty()) {
     		if(!productionBin.top().isDetective()) 
     			inventory.get(productionBin.top().getId()).add(productionBin.top().getId(), productionBin.top());
     		else if(defectives.containsKey(productionBin.top().getId())) 
     			defectives.put(productionBin.top().getId(), defectives.get(productionBin.top().getId()+1));
     		else 
     			defectives.put(productionBin.top().getId(), 1);
-    		getProductionBin().pop();
+    		productionBin.pop();
     	}
     }
     
