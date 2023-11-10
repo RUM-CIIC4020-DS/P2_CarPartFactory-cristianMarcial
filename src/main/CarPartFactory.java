@@ -218,27 +218,20 @@ public class CarPartFactory {
      * remain in inventory. 
      */
     public void processOrders() {
-    	/**/
         for(Order o : this.orders) {
-            List<Integer> availableParts2 = new DoublyLinkedList<Integer>();
-            Map<Integer, List<CarPart>> availableParts = new HashTableSC<Integer, List<CarPart>>(10, new BasicHashFunction());
         	boolean fulfilled = true;
         	
-        	for(int p : o.getRequestedParts().getKeys()) { //int p : o.getRequestedParts().getKeys()
-        		//for(int q = 0; q < o.getRequestedParts().get(p); q++)if(inventory.get(p).contains(null)) {} //availableParts.put(null, null);
-        		
+        	/**
+        	 * If the number of requested parts is bigger than number of that part in the inventory, the order cannot be fulfilled.
+        	 */
+        	for(int p : o.getRequestedParts().getKeys()) 
         		if(inventory.get(p).size()<o.getRequestedParts().get(p)) fulfilled = false;
-        		/*
-        		if(inventory.containsKey(p)) availableParts.put(p, null ); // o.getRequestedParts().get(p)= amount needed.
-        		else fulfilled = false;*/
-        	}
-        	if(fulfilled) //for(int i : availableParts2)  //inventory.remove(i);
+        	if(fulfilled)
         		for(int p : o.getRequestedParts().getKeys())
         			for(int q = 0; q < o.getRequestedParts().get(p); q++)
         				inventory.get(p).remove(0);
         	o.setFulfilled(fulfilled);
         }
-        /**/
     }
     
     /**
