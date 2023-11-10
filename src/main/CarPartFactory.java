@@ -243,7 +243,7 @@ public class CarPartFactory {
     		else if(!defectives.containsKey(productionBin.top().getId())) 
     			defectives.put(productionBin.top().getId(), 1);
     		else 
-    			defectives.put(productionBin.top().getId(), defectives.get(productionBin.top().getId()+1));
+    			defectives.put(productionBin.top().getId(), defectives.get(productionBin.top().getId())+1);
     		productionBin.pop();
     	}
     }
