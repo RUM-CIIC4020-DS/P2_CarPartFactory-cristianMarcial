@@ -61,50 +61,110 @@ public class CarPartFactory {
         
     }
     
+    /**
+   	 * Returns a List with all the machines of this factory.
+   	 * 
+   	 * @return a List of PartMachines in the factory.
+   	 */
     public List<PartMachine> getMachines() {
     	return this.machines;
     }
     
+    /**
+	 * Sets the machines of this factory with the given argument.
+	 * 
+	 * @param machines a List of part machines for replacing the previous machines.
+	 */
     public void setMachines(List<PartMachine> machines) {
         this.machines = machines;
     }
     
+    /**
+   	 * Returns the all the parts produced by the machines during production.
+   	 * 
+   	 * @return a Stack of CarParts with all the parts being produced during production.
+   	 */
     public Stack<CarPart> getProductionBin() {
     	return this.productionBin;
     }
     
+    /**
+	 * Sets the content of the production bin with the given argument.
+	 * 
+	 * @param production a Stack containing CarParts for replacing the previous one.
+	 */
     public void setProductionBin(Stack<CarPart> production) {
     	this.productionBin = production;
     }
     
+    /**
+   	 * Returns the all the car parts that can be produced in the factory.
+   	 * 
+   	 * @return a Map with CarParts of the factory as the values and its id's as keys.
+   	 */
     public Map<Integer, CarPart> getPartCatalog() {
     	return this.partCatalog;
     }
     
+    /**
+	 * Sets the catalog of the part produced in this factory with the given argument.
+	 * 
+	 * @param partCatalog a Map with CarParts as a value and its id's as keys for replacing the previous catalog.
+	 */
     public void setPartCatalog(Map<Integer, CarPart> partCatalog) {
         this.partCatalog = partCatalog;
     }
     
+    /**
+   	 * Returns the all the car parts produced and not used for an order.
+   	 * 
+   	 * @return a Map with Lists of CarParts as the values and its id's as keys.
+   	 */
     public Map<Integer, List<CarPart>> getInventory() {
     	return this.inventory;
     }
     
+    /**
+   	 * Sets the inventory of all part produced in this factory with the given argument.
+   	 * 
+   	 * @param partCatalog a Map of a List of car part as a value and its id's as keys for replacing the previous inventory.
+   	 */
     public void setInventory(Map<Integer, List<CarPart>> inventory) {
         this.inventory = inventory;
     }
     
+    /**
+   	 * Returns a List with all the orders received.
+   	 * 
+   	 * @return a List of Orders.
+   	 */
     public List<Order> getOrders() {
     	return this.orders;
     }
     
+    /**
+	 * Sets the machines of this factory with the given argument.
+	 * 
+	 * @param orders a List of Orders for replacing the previous List of the orders received.
+	 */
     public void setOrders(List<Order> orders) {
         this.orders = orders;
     }
     
+    /**
+   	 * Returns the all the car parts produced which are defective.
+   	 * 
+   	 * @return a Map with the defectives CarParts id's as the keys and their quantity as value.
+   	 */
     public Map<Integer, Integer> getDefectives() {
     	return this.defectives;
     }
     
+    /**
+   	 * Sets the inventory of all part produced in this factory with the given argument.
+   	 * 
+   	 * @param partCatalog a Map of a List of car part as a value and its id's as keys for replacing the previous inventory.
+   	 */
     public void setDefectives(Map<Integer, Integer> defectives) {
         this.defectives = defectives;
     }
@@ -144,10 +204,9 @@ public class CarPartFactory {
     }
     
     /**
-     * Method that receives a path to the parts csv and initializes all the machines with the provided information. There
-     * is no specific rule for the id of the machines, except that they must be unique.
+     * Method that receives a path to the parts csv and initializes all the machines with the provided information. 
      * 
-     * @param path
+     * @param path a String for receiving the file path in which the car parts information are located.
      */
     public void setupMachines(String path) throws IOException {
 		this.machines = new DoublyLinkedList<PartMachine>();
@@ -192,24 +251,42 @@ public class CarPartFactory {
     /**
      * Simulates the execution of the factory for the given number of days and each day runs for the given amount of minutes.
      * 
-     * @param days
-     * @param minutes 
+     * @param days number of times that the machines operate for the given minutes.
+     * @param minutes number of times that the conveyor belt rotates in one day.
      */
     public void runFactory(int days, int minutes) {
         for(int i = 0; i < days; i++) {	
+        	
+        	/**
+        	 * Each minute its checked if there is something available on each machine. If there is,
+        	 * it is added to the production bin.
+        	 */
         	for(int j = 0; j < minutes; j++)
         		for(PartMachine m: this.machines) {
         			CarPart result = m.produceCarPart();
         			if(result!=null) this.productionBin.push(result);
         		}
-        	for(PartMachine m: this.machines) {
+        	
+        	/**
+        	 * This empties the conveyor belts of the machines, and any leftover part is placed in the production bin.
+        	 */
+        	for(PartMachine m: this.machines) 
         		for(int k = 0; k < 10; k++) {
         			if(m.getConveyorBelt().front()!=null) this.productionBin.push(m.getConveyorBelt().front());
         			m.getConveyorBelt().dequeue();
         			m.getConveyorBelt().enqueue(null);
         		}
-        	} this.storeInInventory();
-        } this.processOrders();
+        	
+        	/**
+        	 * The items are stored in the inventory.
+        	 */
+        	this.storeInInventory();
+        }
+        
+        /**
+         * At the end, when all the days have passed, the orders are processed.
+         */
+        this.processOrders();
     }
     
     /**
@@ -226,6 +303,7 @@ public class CarPartFactory {
         	 */
         	for(int p : o.getRequestedParts().getKeys()) 
         		if(inventory.get(p).size()<o.getRequestedParts().get(p)) fulfilled = false;
+        	
         	if(fulfilled)
         		for(int p : o.getRequestedParts().getKeys())
         			for(int q = 0; q < o.getRequestedParts().get(p); q++)
