@@ -181,10 +181,10 @@ public class CarPartFactory {
     	while(!this.productionBin.isEmpty()) {
     		if(!productionBin.top().isDetective()) 
     			inventory.get(productionBin.top().getId()).add(productionBin.top());
-    		else if(defectives.containsKey(productionBin.top().getId())) 
-    			defectives.put(productionBin.top().getId(), defectives.get(productionBin.top().getId()+1));
-    		else 
+    		else if(!defectives.containsKey(productionBin.top().getId())) 
     			defectives.put(productionBin.top().getId(), 1);
+    		else 
+    			defectives.put(productionBin.top().getId(), defectives.get(productionBin.top().getId()+1));
     		productionBin.pop();
     	}
     }
@@ -215,19 +215,30 @@ public class CarPartFactory {
     /**
      * Checks the current inventory and starts fulfilling orders if the parts are available. It’s considered fulfilled if 
      * all the parts are available and they are removed from inventory. If an order cannot be fulfilled, then the parts 
-     * remain in inventory.
+     * remain in inventory. 
      */
     public void processOrders() {
+    	/**/
         for(Order o : this.orders) {
-            List<Integer> availableParts = new DoublyLinkedList<Integer>();
+            List<Integer> availableParts2 = new DoublyLinkedList<Integer>();
+            Map<Integer, List<CarPart>> availableParts = new HashTableSC<Integer, List<CarPart>>(10, new BasicHashFunction());
         	boolean fulfilled = true;
-            //o.getRequestedParts().get(p) /availableParts.put(p, o.getRequestedParts().get(p));
-        	for(int p : o.getRequestedParts().getKeys())
-        		if(inventory.containsKey(p)) availableParts.add(p);
-        		else fulfilled = false;
-        	if(fulfilled) for(int i : availableParts) inventory.remove(i);
+        	
+        	for(int p : o.getRequestedParts().getKeys()) { //int p : o.getRequestedParts().getKeys()
+        		//for(int q = 0; q < o.getRequestedParts().get(p); q++)if(inventory.get(p).contains(null)) {} //availableParts.put(null, null);
+        		
+        		if(inventory.get(p).size()<o.getRequestedParts().get(p)) fulfilled = false;
+        		/*
+        		if(inventory.containsKey(p)) availableParts.put(p, null ); // o.getRequestedParts().get(p)= amount needed.
+        		else fulfilled = false;*/
+        	}
+        	if(fulfilled) //for(int i : availableParts2)  //inventory.remove(i);
+        		for(int p : o.getRequestedParts().getKeys())
+        			for(int q = 0; q < o.getRequestedParts().get(p); q++)
+        				inventory.get(p).remove(0);
         	o.setFulfilled(fulfilled);
         }
+        /**/
     }
     
     /**
