@@ -27,13 +27,13 @@ public class CarPart {
 	/**
 	 * It is true if this part is defective; false otherwise.
 	 */
-	boolean isDetective;
+	boolean isDefective;
 	
-    public CarPart(int id, String name, double weight, boolean isDetective) {
+    public CarPart(int id, String name, double weight, boolean isDefective) {
         this.id = id;
         this.name = name;
         this.weight = weight;
-        this.isDetective = isDetective;
+        this.isDefective = isDefective;
     }
     
     /**
@@ -95,17 +95,17 @@ public class CarPart {
 	 * 
 	 * @return a boolean value representing s whether this part is defective or not.
 	 */
-    public boolean isDetective() {
-    	return this.isDetective;
+    public boolean isDefective() {
+    	return this.isDefective;
     }
     
     /**
-	 * Sets the detective status of the part with the given argument.
+	 * Sets the defective status of the part with the given argument.
 	 * 
-	 * @param isDetective a boolean for replacing the previous detective status of the part.
+	 * @param isDefective a boolean for replacing the previous defective status of the part.
 	 */
-    public void setDetective(boolean isDetective) {
-        this.isDetective = isDetective;
+    public void setDefective(boolean isDefective) {
+        this.isDefective = isDefective;
     }
     
     /**

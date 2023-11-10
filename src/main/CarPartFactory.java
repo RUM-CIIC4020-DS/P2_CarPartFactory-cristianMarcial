@@ -238,7 +238,7 @@ public class CarPartFactory {
      */
     public void storeInInventory() {
     	while(!this.productionBin.isEmpty()) {
-    		if(!productionBin.top().isDetective()) 
+    		if(!productionBin.top().isDefective()) 
     			inventory.get(productionBin.top().getId()).add(productionBin.top());
     		else if(!defectives.containsKey(productionBin.top().getId())) 
     			defectives.put(productionBin.top().getId(), 1);
@@ -296,19 +296,18 @@ public class CarPartFactory {
      */
     public void processOrders() {
         for(Order o : this.orders) {
-        	boolean fulfilled = true;
+        	o.setFulfilled(true);
         	
         	/**
         	 * If the number of requested parts is bigger than number of that part in the inventory, the order cannot be fulfilled.
         	 */
         	for(int p : o.getRequestedParts().getKeys()) 
-        		if(inventory.get(p).size()<o.getRequestedParts().get(p)) fulfilled = false;
-        	
-        	if(fulfilled)
+        		if(inventory.get(p).size()<o.getRequestedParts().get(p)) o.setFulfilled(false);
+        			
+        	if(o.isFulfilled())
         		for(int p : o.getRequestedParts().getKeys())
         			for(int q = 0; q < o.getRequestedParts().get(p); q++)
         				inventory.get(p).remove(0);
-        	o.setFulfilled(fulfilled);
         }
     }
     
