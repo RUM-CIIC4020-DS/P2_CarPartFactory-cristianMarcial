@@ -17,7 +17,7 @@ import interfaces.*;
  * production. Each variable can be obtained and changed with the "Getters and Setters" methods and each one is initialized either 
  * by the constructor method or by their respective method.
  * 
- * In order to read the files that are in the input folder and contains the orders, the car parts for being produced and their
+ * In order to read the files that are in the input folder and contain the orders, the car parts for being produced and their
  * machines, the BufferedReader Class was used.
  * 
  * @author Cristian Marcial cristian.marcial@upr.edu 
@@ -194,8 +194,8 @@ public class CarPartFactory {
 		lineInOrdersFile.readLine(); //The first line don't represent an order, so is iterated before the following loop starts.
 		
 		/**
-		 * This while loop iterates through every line until reaches the end of the document (which there is no more lines,
-		 * so currentLine is null). Inside of it, there is the variable "lineSplit", which divides "currentLineInOrdersFile" 
+		 * This while loop iterates through every line until reaches the end of the document (which there is no more lines, so 
+		 * currentLineInOrdersFile is null). Inside of it, there is the variable "lineSplit", which divides "currentLineInOrdersFile" 
 		 * variable from the line's commas in order to have each order parameters in separated strings inside a String Array.
 		 */
 		while((currentLineInOrdersFile = lineInOrdersFile.readLine()) != null) {
@@ -230,7 +230,7 @@ public class CarPartFactory {
 		this.partCatalog = new HashTableSC<Integer, CarPart>(10, new BasicHashFunction());
 		
 		/**
-		 * This section inside the setupOrders method have a collection of variables which divides the lines of the document 
+		 * This section inside the setupMachines method have a collection of variables which divides the lines of the document 
 		 * which is being read. the variable "lineInPartsFile" loads the documents itself making use of the BufferedReader 
 		 * Class. The variable "currentLineInPartsFile" is the line which is currently being iterated by the while loop below.
 		 */
@@ -240,8 +240,8 @@ public class CarPartFactory {
 		
 		/**
 		 * This while loop iterates through every line until reaches the end of the document (which there is no more lines, so 
-		 * currentLine is null). Inside of it, there is the variable "lS", which divides "currentLineInPartsFile" variable from 
-		 * the line's commas in order to have each order parameters in separated strings inside a String Array.
+		 * currentLineInPartsFile is null). Inside of it, there is the variable "lS", which divides "currentLineInPartsFile" 
+		 * variable from the line's commas in order to have each order parameters in separated strings inside a String Array.
 		 */
 		while((currentLineInPartsFile = lineInPartsFile.readLine()) != null) {
 			String[] lS = currentLineInPartsFile.split(",", 6);

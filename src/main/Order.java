@@ -79,7 +79,7 @@ public class Order {
     /**
 	 * Returns a Map with the requested parts id's as a key and the quantity of each one as a value.
 	 * 
-	 * @return a Map value holding the requested parts id and their quantity.
+	 * @return a Map value holding two Integer values representing the requested parts id and their quantity.
 	 */
     public Map<Integer, Integer> getRequestedParts() {
     	return this.requestedParts;

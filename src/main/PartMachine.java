@@ -6,9 +6,11 @@ import interfaces.Queue;
 
 /**
  * This class will represent a machine that produces car parts. In this class, there are private variables which store 
- * information about the machine, such as its ID, the car part that it produce, the frequency of car parts production, 
- * the error margin of the weight of the part produced and the chance of the part being defective. Each variable can be 
- * obtained and changed with the "Getters and Setters" methods and each one is initialized by the constructor method.
+ * information about the machine, such as its ID, the car part that it produce, the frequency of car parts production, the 
+ * error margin of the weight of the part produced, the chance of that part being defective, a Queue of Integers representing
+ * the Timer of the machine which controls its production, the conveyor belt content of the machine, and the number of all 
+ * parts produced. Each variable can be obtained and changed with the "Getters and Setters" methods and each one is initialized
+ * by the constructor method.
  * 
  * In order to generate for each part their new random weight, which is based of the base weight of car part being produced
  * and the weight error, The Random Class was used.
@@ -69,8 +71,11 @@ public class PartMachine {
         this.weightError = weightError;
         this.chanceOfDefective = chanceOfDefective;
         
+        /**
+         * this fills the timer with Integer values from (period – 1) to 0.
+         */
         for(int i=period-1; i>=0; i--) this.timer.enqueue(i);
-         
+        
         resetConveyorBelt();
     }
     
