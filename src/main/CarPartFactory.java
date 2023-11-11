@@ -319,7 +319,7 @@ public class CarPartFactory {
     /**
      * Checks the current inventory and starts fulfilling orders if the parts are available. It’s considered fulfilled if 
      * all the parts are available and they are removed from inventory. If an order cannot be fulfilled, then the parts 
-     * remain in inventory. 
+     * remain in inventory.
      */
     public void processOrders() {
         for(Order o : this.orders) {
@@ -341,7 +341,7 @@ public class CarPartFactory {
     /**
      * Generates a report indicating how many parts were produced per machine,
      * how many of those were defective and are still in inventory. Additionally, 
-     * it also shows how many orders were successfully fulfilled. 
+     * it also shows how many orders were successfully fulfilled.
      */
     public void generateReport() {
         String report = "\t\t\tREPORT\n\n";
