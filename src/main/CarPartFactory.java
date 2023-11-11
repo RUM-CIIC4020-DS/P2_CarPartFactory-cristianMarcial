@@ -11,7 +11,14 @@ import data_structures.LinkedStack;
 import interfaces.*;
 
 /**
- * This class will manage all the machines and any operation related to them. ??)
+ * This class manages all the machines and any operation related to them. In this class, there are private variables which store 
+ * information about the initialized factory, such as its machines, the orders received, its car part catalog, the number of parts
+ * produced and stored, the number of parts produced that resulted defective and the parts being produced by the machines during 
+ * production. Each variable can be obtained and changed with the "Getters and Setters" methods and each one is initialized either 
+ * by the constructor method or by their respective method.
+ * 
+ * In order to read the files that are in the input folder and contains the orders, the car parts for being produced and their
+ * machines, the BufferedReader Class was used.
  * 
  * @author Cristian Marcial cristian.marcial@upr.edu 
  */
@@ -57,7 +64,6 @@ public class CarPartFactory {
     	setupInventory();
     	this.productionBin = new LinkedStack<CarPart>(); 
     	defectives = new HashTableSC<Integer, Integer>(10, new BasicHashFunction());
-        
     }
     
     /**
@@ -177,23 +183,35 @@ public class CarPartFactory {
     public void setupOrders(String path) throws IOException {
 		this.orders = new DoublyLinkedList<Order>();
 		
+		/**
+		 * This section inside the setupOrders method have a collection of variables which divides the lines of the
+		 * document which is being read. the variable "lineInOrdersFile" loads the documents itself making use of
+		 * the BufferedReader Class. The variable "currentLineInOrdersFile" is the line which is currently being 
+		 * iterated by the while loop below.
+		 */
     	BufferedReader lineInOrdersFile = new BufferedReader(new FileReader(path));
 		String currentLineInOrdersFile; 
-		lineInOrdersFile.readLine();
+		lineInOrdersFile.readLine(); //The first line don't represent an order, so is iterated before the following loop starts.
 		
+		/**
+		 * This while loop iterates through every line until reaches the end of the document (which there is no more lines,
+		 * so currentLine is null). Inside of it, there is the variable "lineSplit", which divides "currentLineInOrdersFile" 
+		 * variable from the line's commas in order to have each order parameters in separated strings inside a String Array.
+		 */
 		while((currentLineInOrdersFile = lineInOrdersFile.readLine()) != null) {
-			
-			/**
-			 * Each line is spilt id,customer_name,requested_parts 
-			 */
 	        String[] lineSplit = currentLineInOrdersFile.split(",", 3);
 	        
+	        /**
+	         * The third parameter of the Order Class have a Map which its key represents part id and the values are the amount needed. In 
+	         * the document, that information is given on the third column column, in which there are tuples linked by “-“ and inside each 
+	         * tuple there is two integer values: the first one represents the key of the Map and the second one represents the value. So, 
+	         * lineSplit[2] has to be split in a String Array divided for each requested part and then passed to a Map. 
+	         */
 	        int numOfRequestedPartsMap = 1;
 	        for(char i : lineSplit[2].toCharArray()) if(i=='-') numOfRequestedPartsMap++;
 	        String[] requestedParts = lineSplit[2].split("-", numOfRequestedPartsMap);
 	        Map<Integer, Integer> requestedPartsMap = new HashTableSC<Integer, Integer>(10, new BasicHashFunction());
 	        
-	        //(5 8)-(3 6)-(1 10)
 	        for(String i : requestedParts) {
 	        	String s[] = i.substring(1, i.length()-1).split(" ", 2);
 	        	requestedPartsMap.put(Integer.parseInt(s[0]), Integer.parseInt(s[1]));
@@ -211,12 +229,22 @@ public class CarPartFactory {
 		this.machines = new DoublyLinkedList<PartMachine>();
 		this.partCatalog = new HashTableSC<Integer, CarPart>(10, new BasicHashFunction());
 		
+		/**
+		 * This section inside the setupOrders method have a collection of variables which divides the lines of the document 
+		 * which is being read. the variable "lineInPartsFile" loads the documents itself making use of the BufferedReader 
+		 * Class. The variable "currentLineInPartsFile" is the line which is currently being iterated by the while loop below.
+		 */
     	BufferedReader lineInPartsFile = new BufferedReader(new FileReader(path));
 		String currentLineInPartsFile;
-		lineInPartsFile.readLine();
+		lineInPartsFile.readLine(); //The first line don't represent an order, so is iterated before the following loop starts.
 		
+		/**
+		 * This while loop iterates through every line until reaches the end of the document (which there is no more lines, so 
+		 * currentLine is null). Inside of it, there is the variable "lS", which divides "currentLineInPartsFile" variable from 
+		 * the line's commas in order to have each order parameters in separated strings inside a String Array.
+		 */
 		while((currentLineInPartsFile = lineInPartsFile.readLine()) != null) {
-			String[] lS = currentLineInPartsFile.split(",", 6); //ID 0 ,PartName 1,Weight 2,WeightError 3,Period 4,ChanceOfDefective 5
+			String[] lS = currentLineInPartsFile.split(",", 6);
 			CarPart part = new CarPart(Integer.parseInt(lS[0]), lS[1], Double.parseDouble(lS[2]), false);
 			this.partCatalog.put(Integer.parseInt(lS[0]), part);
 			this.machines.add(new PartMachine(Integer.parseInt(lS[0]), part, Integer.parseInt(lS[4]), Double.parseDouble(lS[3]), Integer.parseInt(lS[5])));
