@@ -3,10 +3,12 @@ package main;
 import interfaces.Map;
 
 /**
- * This class will represent a car part produced by the? machine of this.
+ * This class will represent an order made by a customer or company. In this class, there are private variables which store 
+ * information about the order, such as its ID, the name of the customer who made it, the parts which were requested by the
+ * customer and their quantity, and its fulfilled status. Each variable can be obtained and changed with the "Getters and 
+ * Setters" methods and each one is initialized by the constructor method.
  * 
- * 
- * @author Cristian Marcial cristian.marcial@upr.edu 
+ * @author Cristian Marcial cristian.marcial@upr.edu
  */
 public class Order {
 	

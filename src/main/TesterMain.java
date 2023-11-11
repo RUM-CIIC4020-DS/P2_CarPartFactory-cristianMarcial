@@ -10,7 +10,7 @@ public class TesterMain {
             System.out.println(cpf.getMachines().get(6));
             System.out.println(cpf.getMachines().get(2));
             System.out.println(cpf.getPartCatalog().get(1).getName());
-            cpf.runFactory(1, 30);
+            cpf.runFactory(1, 1440);
             cpf.generateReport();
         } catch (IOException e) {
             // TODO Auto-generated catch block

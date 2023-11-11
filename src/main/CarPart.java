@@ -3,7 +3,7 @@ package main;
 /**
  * This class will represent a car part produced by a machine of this. In this class, there are private variables which store 
  * information about the car part, such as its ID, its name, author, its weight, and its defective status. Each variable can 
- * be obtained and changed with the "Getters and Setters" methods and they are initialized by the constructor method.
+ * be obtained and changed with the "Getters and Setters" methods and each one is initialized by the constructor method.
  * 
  * @author Cristian Marcial cristian.marcial@upr.edu 
  */
